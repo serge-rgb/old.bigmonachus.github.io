@@ -1,0 +1,21 @@
+---
+layout: default
+title: Sergio González
+---
+
+<div id="home">
+    <p>
+    I am a programmer gone indie. Currently finishing a super cool 3D modeling project <b>[link soon!]</b>
+    </p>
+    <p>
+    I am strongly opinionated, and my opinions change all the time. You should
+    not pay attention to me.
+    </p>
+
+    <h1>Content</h1>
+    <ul class="posts">
+        {% for post in site.posts %}
+        <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
