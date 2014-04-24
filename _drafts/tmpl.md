@@ -1,4 +1,6 @@
 ---
 layout: post
-title: title
+title: draft template
 ---
+
+# Nothing goes here!
