@@ -17,7 +17,7 @@ I have always been in love with virtual worlds.
 
 I loved to play with my (completely illegal, but come on, who can afford it?) copies of Flash and Maya. I created my share of 2D shorts and 3D models/animations. I was a Linux fanatic in middle school and I had the coolest teacher, who let me set up the infrastructure to teach other kids what FTP was; he also introduced me to Python before Paul Graham wrote "The Python Paradox"! Great teacher. I don't remember when I started programming; I remember using something called "Dark Basic" on my uncle's computer because our home PC couldn't run it, but my memory is almost useless. I didn't take programming seriously until my first couple of C and C++ projects in high school.
 
-After high school, I decided to enroll to the closest thing Mexico has to a Computer Science curriculum at Mexico Public University. In hindsight I should have chosen Math as my major. I don't think you can teach programming in a classroom and most interesting CS classes are also Math classes. I started college in August 2007 and I *still* have not graduated...
+After high school, I decided to enroll to the closest thing Mexico has to a Computer Science curriculum at Mexico's Public University. In hindsight I should have chosen Math as my major. I don't think you can teach programming in a classroom and most interesting CS classes are also Math classes. I started college in August 2007 and I *still* have not graduated...
 
 # Fancy Jobs
 
