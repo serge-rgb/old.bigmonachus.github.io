@@ -5,7 +5,7 @@ title: "Going Indie #2 -- Holy shit"
 
 Deciding to "go indie" and go off on my own on a marathonic quest was a carefully taken decision. I have a history of making impulsive and stupid decisions; this one was not impulsive.
 
-There have been a couple of unforseen surprises. The first one was my mother going apeshit.
+There have been a couple of unforeseen surprises. The first one was my mother going apeshit.
 
 If you haven't seen Trainspotting, i suggest that you stop reading this and fix that immediately. If you have seen Trainspotting, then you certainly remember the best intro sequence in cinematic history.
 
@@ -25,13 +25,11 @@ Not having a boss has its own bucket of surprises. When I work for someone, I wo
 Luckily, I found an elegant solution. It started by me sending weekly email reports to my dad, who agreed to be my proxy boss. The point of the experiment was to have someone to report my progress to.
 This solution evolved into a very simple system. I use one half of my whiteboard to place postits. Every week I fill the TO-DO side, and I move it to the DONE side as I progress. Ideally, by the end of the week, the DONE side is empty.
 
-![NO THIS IS NOT SCRUM SHUT UP GO AWAY I HATE THE WORD AGILE]
-
-[postits]: img/postits.jpg "Post"
-
 ![test]({{ site.url }}/img/postits.jpg)
 
-I am slowly gaining momentum, and I am very happy with my progress so far. It is all about balance; I choose reasonable To-Do items and the free time appears naturally. It also helps that I have an awesome girlfriend. I don't think my friends feel neglected (post complaints in the comments?)
+NO THIS IS NOT SCRUM SHUT UP GO AWAY I HATE THE WORD AGILE
+
+I am slowly gaining momentum, and I am very happy with my progress so far. It is all about balance; Choose reasonable To-Do items to keep myself challenged but also set a limit so that free time appears naturally. It also helps that I have an awesome girlfriend. I don't think my friends feel neglected (post complaints in the comments?)
 
 
 
