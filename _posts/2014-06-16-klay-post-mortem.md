@@ -39,7 +39,7 @@ Let me get to it point by point.
 
     The Constrained Delaunay Triangulation is a [Delaunay Triangulation](http://en.wikipedia.org/wiki/Delaunay_triangulation) where some edges are specified to be included even if they don't meet the Delaunay criterion -- No point in the triangulation is inside the circumcircle of any triangle.
 
-    <img src="http://127.0.0.1:4000/img/klaypm_1.png" style="width: 600px;"/>
+    <img src="http://bigmonachus.org/img/klaypm_1.png" style="width: 600px;"/>
 
     When applied to the sanitized points, we get a zig-zaggy-triangulation.
 
@@ -55,7 +55,7 @@ Let me get to it point by point.
 
     So now we have the original sanitized stroke, the new interior points from the Sleeve triangles and a height map. The next step, which is also a deviation from the TEDDY paper, which uses a different method of triangulation, is to re-run the CDT function, with the same edge constraints but with new interior points.
 
-    <img src="http://127.0.0.1:4000/img/klaypm_2.png" style="width: 600px;"/>
+    <img src="http://bigmonachus.org/img/klaypm_2.png" style="width: 600px;"/>
 
     Cool note: this is a decent UV-map of half of the finished 3D mesh ;)
 
@@ -71,7 +71,7 @@ Let me get to it point by point.
 
 From early-on, I wanted a non-photorealistic style. I ended up with a special toon shader:
 
-<img src="http://127.0.0.1:4000/img/klaypm_3.png" style="width: 600px;"/>
+<img src="http://bigmonachus.org/img/klaypm_3.png" style="width: 600px;"/>
 
 The shader is an old-school Phong shader with thresholds set to decrease lightness. The black outline is a check for 0 screen-space normals with an epsilon value for thickness.
 
@@ -110,7 +110,7 @@ Keeping it running on multiple platforms was good because it made me find bugs -
 
 After I decided to go indie, I sat down and crunched through the last 10%. It was a month of steady work. Not much fun. I had to make a Menu system, create backgrounds, integrate the app with Facebook and make sure that everything worked in different Apple devices (I have an old iPad 2 and a new, sexy, iPad Air.) There was also some bug fixing :).
 
-<img src="http://127.0.0.1:4000/img/klaypm_4.png" style="width: 600px;"/>
+<img src="http://bigmonachus.org/img/klaypm_4.png" style="width: 600px;"/>
 
 # The way forward
 
