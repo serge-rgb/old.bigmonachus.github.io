@@ -5,6 +5,10 @@ title: "Klay: A post-mortem"
 
 Klay lets you create 3D sculptures in seconds using your iPad. I finished it yesterday after years of maybe-sometimes-getting-some-work-done.
 
+Old video, but pretty close to the final thing:
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/RL9wgP4O-_4" frameborder="0" allowfullscreen></iframe>
+
 Here is a post-mortem of the fun bits of the app.
 
 # Motivation
@@ -24,10 +28,6 @@ So... moving on:
 Klay's mesh generation is this pipeline:
 
 [2D points] -> Sanitize -> Constrained Delaunay (aka CDT) -> Add internal points -> Re-CDT -> Get 3d mesh
-
-Old video, but pretty close to the final thing:
-
-<iframe width="560" height="315" src="//www.youtube.com/embed/RL9wgP4O-_4" frameborder="0" allowfullscreen></iframe>
 
 Let me get to it point by point.
 
