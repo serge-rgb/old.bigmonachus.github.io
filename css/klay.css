@@ -1,0 +1,21 @@
+body {
+    background-image:url(/img/PaperBG.png);
+    height: 100%;
+}
+.top_bar {
+	top:0px;
+	height:10%;
+	width:100%;
+}
+.bot_bar {
+	top:0px;
+	height:20%;
+	width:100%;
+}
+#appstore {
+    margin-left:35%;
+    width:30%;
+    margin-right:35%;
+    margin-top:100px;
+}
+
