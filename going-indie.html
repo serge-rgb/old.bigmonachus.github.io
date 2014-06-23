@@ -6,7 +6,7 @@ title: Going Indie
 <div id="home">
     <ul>
         {% for post in {site.posts | size} %}
-        {% if post.series == "going-indie" %}
+        {% if post.categories contains "going-indie" %}
         <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
         {% endif %}
         {% endfor %}

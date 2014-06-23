@@ -1,6 +1,6 @@
 ---
 layout: post
-series: devlog
+categories: [devlog]
 title: "Klay: A post-mortem"
 ---
 

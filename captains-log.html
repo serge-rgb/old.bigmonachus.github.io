@@ -6,7 +6,7 @@ title: Captain's Log
 <div id="home">
     <ul>
         {% for post in {site.posts | size} %}
-        {% if post.series == "captains-log" %}
+        {% if post.categories contains "captains-log" %}
         <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
         {% endif %}
         {% endfor %}

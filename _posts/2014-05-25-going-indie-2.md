@@ -1,6 +1,6 @@
 ---
 layout: post
-series: going-indie
+categories: [going-indie]
 title: "Going Indie #2 -- Holy shit"
 ---
 

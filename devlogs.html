@@ -6,7 +6,7 @@ title: Dev logs
 <div id="home">
     <ul>
         {% for post in {site.posts | size} %}
-        {% if post.series == "devlog" %}
+        {% if post.categories contains "devlog" %}
         <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
         {% endif %}
         {% endfor %}
