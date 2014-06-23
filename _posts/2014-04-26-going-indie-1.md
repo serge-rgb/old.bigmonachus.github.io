@@ -1,5 +1,6 @@
 ---
 layout: post
+series: going-indie
 title: "Going Indie #1 -- A good start"
 ---
 

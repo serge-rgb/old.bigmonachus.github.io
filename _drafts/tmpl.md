@@ -1,5 +1,6 @@
 ---
 layout: post
+series:
 title: draft template
 ---
 
