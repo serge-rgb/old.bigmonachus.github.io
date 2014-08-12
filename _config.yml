@@ -2,4 +2,4 @@ name: Sergio Gonzalez
 description: "Sergio Gonzalez: Programmer at arms"
 url: http://bigmonachus.org
 markdown: redcarpet
-pygments: true
+highlighter: rouge
