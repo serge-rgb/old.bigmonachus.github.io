@@ -14,59 +14,65 @@ Here is a post-mortem of the fun bits of the app.
 
 # Motivation
 
-3D modeling & animation is tedious and unpleasant. Programming is also tedious and unpleasant, but not nearly as much, and you get to use your brain (when you are not busy gluing shit together, which might become your whole job if you are not careful).
+3D modeling & animation is tedious and unpleasant. Programming is also tedious and unpleasant, but not nearly as much, and you get to use your brain!.
 
-When I was a teen, I was really into 3D modeling and animation. I created some stuff, but I was mostly showing signs of real OCD by compulsively learning tools. (Maya, XSI, Lightwave, Premiere, Photoshop, After Effects... It was a huge waste of time because I "learned" more than I was creating). [Takeo Igarashi](http://www-ui.is.s.u-tokyo.ac.jp/~takeo/teddy/teddy.htm) is a brilliant researcher, and my tool-learning compulsion let me to find his early work: T.E.D.D.Y. -- A buggy Java program with which you could make 3D shapes from 2D strokes (simple closed curves, please). It was many years later that my subconscious dug out TEDDY and thought "This would be a cool iPad app." ...It took me about 2.5 years to get a finished app. In my defense, most of that time was spent not working on Klay.
+I used to be very much into 3D modeling and animation. I did some stuff with Maya, XSI, Lightwave and so on. Takeo Igarashi](http://www-ui.is.s.u-tokyo.ac.jp/~takeo) is a brilliant researcher, and my tool-learning compulsion let me to find his early work: T.E.D.D.Y. -- A Java program with which you could make 3D shapes from 2D strokes (simple closed curves, please). It was many years later that my subconscious dug out TEDDY and thought "This would be a cool iPad app."
 
-At its core, Klay is a re-implementation of T.E.D.D.Y. Ignoring all mesh-editing features. On top of that, there is social stuff -- email, facebook -- and a very pleasant touch focused user experience. It is very simple -- just create meshes, with undo and redo. This makes it very easy for kids to learn it. They love it.
+# What is it?
 
-So... moving on:
+At its core, Klay is a re-implementation of T.E.D.D.Y. without mesh-editing features. On top of that, it has social stuff -- email, facebook -- and a very pleasant touch focused user experience. It is a simple app -- just create blobs on top of other blobs, with undo and redo. This makes it very easy for kids to learn it. They love it.
 
 # Meshgen
 
-2D Meshes are represented using [Half-Edges](http://en.wikipedia.org/wiki/Doubly_connected_edge_list). 3D meshes are vanilla arrays-of-vertices-and-indices. We generate 3D meshes from the 2D mesh and a height map. There was never a need to be fancy with 3D.
+2D Meshes are represented using [Half-Edges](http://en.wikipedia.org/wiki/Doubly_connected_edge_list). 3D meshes are vanilla arrays-of-vertices-and-indices.
 
-Klay's mesh generation is this pipeline:
+After the user finishes a gesture, the algorithm receives a set of 2D-points in screen-space. If everything goes alright, the pipeline outputs a 3D mesh in world-space.
 
-[2D points] -> Sanitize -> Constrained Delaunay (aka CDT) -> Add internal points -> Re-CDT -> Get 3d mesh
-
-Let me get to it point by point.
+_This is the pipeling of Klay's mesh generation:_
 
 1. Sanitize
 
-    A "stroke" (that's what a drawing intending to create a 3D mesh is called) is an array of points in 2D. Sanitizing makes sure that there are no "fatal" self-intersections, and it does its best to spit out a set of 2d points that will result in a 3D mesh. That why I used the word fatal -- It is possible to self-intersect and still get a mesh.
+    A "stroke" is an array of points in 2D. Sanitizing makes sure that there are no fatal self-intersections, and it does its best to spit out a set of 2d points that will result in a 3D mesh. It is possible to self-intersect and still get a mesh. The process of sanitizing is to make an effort to output a closed simple curve from what is _almost_ a closed simple curve.
 
 2. CDT
 
-    The Constrained Delaunay Triangulation is a [Delaunay Triangulation](http://en.wikipedia.org/wiki/Delaunay_triangulation) where some edges are specified to be included even if they don't meet the Delaunay criterion -- No point in the triangulation is inside the circumcircle of any triangle.
+    The Constrained Delaunay Triangulation is a [Delaunay Triangulation](http://en.wikipedia.org/wiki/Delaunay_triangulation) where some edges are specified to be included even if they don't meet the Delaunay criterion.
+When applied to the sanitized points, we get a zig-zaggy-triangulation.
 
     <img src="http://bigmonachus.org/img/klaypm_1.png" style="width: 600px;"/>
 
-    When applied to the sanitized points, we get a zig-zaggy-triangulation.
-
 3. Add internal points
 
-    We classify the triangles in three categories. "Joint" triangles are triangles that have all edges inside. "Sleeve" triangles have one edge facing the outside and two edges inside. "Terminal" triangles have two edges facing outside. I deviate from the TEDDY paper by only subdividing Sleeve triangles. It works wells enough and it means less code; I'll say more about this later.
+    Having a silluhette curve, we can determine if points are inside or outside the mesh.
 
-    The inside edges of the Sleeve triangles are subdivided by inserting N interior points along each edge (N is larger if the edge is longer). We also calculate the height of each point -- The points are collinear, so we can map them onto the X axis and get the height from an ellipse equation.
+    We classify the triangles into three categories. _Joint_ triangles are triangles that have all edges inside of the mesh. _Sleeve_ triangles have one edge facing the outside and two edges inside. _Terminal_ triangles have two edges facing outside.
 
-    The resulting triangulation is not always pretty, but the shading style doesn't require a pretty triangulation. If I were to add realistic shading (or add a feature to export meshes), then I would prettify the 3D mesh *after* the fact, when we have more information and can make better decisions. For now, the triangulation is "pretty enough".
+    The inside edges of the _Sleeve_ triangles are subdivided by inserting N interior points along each edge (N  is proportional to the length of the edge). These N new points are colinear, so we project them to the X-axis and use an ellipse equation, determined by the length of the edge, to assign heights to each new point.
+
+    We keep the heights in an array, and use the 2D points to create a new triangulation. The Delaunay triangulation is constrained to not modify silluhette edges.
+
 
 4. Re-CDT
 
-    So now we have the original sanitized stroke, the new interior points from the Sleeve triangles and a height map. The next step, which is also a deviation from the TEDDY paper, which uses a different method of triangulation, is to re-run the CDT function, with the same edge constraints but with new interior points.
+    The resulting triangulation is not always pretty, but it works for our shading style.
 
     <img src="http://bigmonachus.org/img/klaypm_2.png" style="width: 600px;"/>
 
     Cool note: this is a decent UV-map of half of the finished 3D mesh ;)
 
+    As you can see, triangles vary a lot in size, and that is a Bad Thing. However, if in the future I were to use a different shading style that required prettier meshes, it would be much better to fix them in the 3D stage, not the triangulation stage.
+
 4. Get 3D Mesh
 
-    It is very simple:
+
+    A 3D mesh is obtained from the 2D mesh by adding a z-component to each vertex.
+
+    The procecdure is this:
+
     1. Duplicate all interior points
     2. Edge points get z=0
-    3. Interior points get the corresponding value from the pre-computed height map. The duplicates get the same value, multiplied by -1.
-    4. Generate an array with all vertices, and an index array that we can use with GL to draw.
+    3. The original interior points get their corresponding z-value from the pre-computed height map from step 3. The duplicated interior points are treated the same, but their z-values go in the opposite direction.
+    4. Using the connectivity information from the 2D points, we put the 3D points into a vertices and indices structure that is easy to feed to OpenGL
 
 # Style
 
@@ -80,9 +86,9 @@ The shader is an old-school Phong shader with thresholds set to decrease lightne
 
 Everything that the hardware doesn't implement is written from scratch (except for all the iOS stuff like facebook sharing and email :) )
 
-This was always a hobby project. I kept it portable and running across a number of platforms at all times. Not all platforms worked all the time, but there were always a couple. The game runs on Linux, OSX, Windows and of course, iOS -- The main target. I ported the code to the Android NDK and got to render a triangle, but I never continued. Android is too much risk for me. I saw a guy distribute a very simple game written in Unity that would crash on my (mainstream) Nexus 7. Android is too fragmented to maintain a hand-made game.
+This was always a hobby project. I kept it portable and running across a number of platforms at all times. Not all platforms worked all the time, but there were always a couple. The game runs on Linux, OSX, Windows and the target platform: iOS. I did a little bit of work with the Android NDK but I never got past the "draw a triangle" stage.
 
-I see development as a hill-climbing problem, at the maximum there is a final product. I learned a lot, but the lack of a goal made me go in orthogonal directions. For instance, I spent a lot of time optimizing my linear algebra library so that some operation or other would only take one or two CPU instructions. It was fun, but it was x86... My final target was ARM, where none of my optimizations were enabled and ultimately, linear algebra is *not* the bottleneck in any part of the program.
+I see development as a hill-climbing problem, at the maximum there is a final product. I learned a lot, but the lack of a goal made me go in not optimal directions. For instance, I spent a lot of time optimizing my linear algebra library so that additions and multiplications would take one or two SIMD instructions. It was fun, but it was x86... My final target was ARM, where none of my optimizations were enabled. Ultimately, linear algebra is *not* the bottleneck in any part of the program.
 
 Some optimizations were good.
 
@@ -109,12 +115,7 @@ Keeping it running on multiple platforms was good because it made me find bugs -
 
 # Focusing
 
-After I decided to go indie, I sat down and crunched through the last 10%. It was a month of steady work. Not much fun. I had to make a Menu system, create backgrounds, integrate the app with Facebook and make sure that everything worked in different Apple devices (I have an old iPad 2 and a new, sexy, iPad Air.) There was also some bug fixing :).
+After I decided to ship this as a product, I sat down and crunched through the last 10%. It was a month of steady hard work. Not much fun. I had to make a Menu system, create backgrounds, integrate the app with Facebook and make sure that everything worked with different Apple devices (I have an old iPad 2 and a new, sexy, iPad Air.) There was also some bug fixing :).
 
 <img src="http://bigmonachus.org/img/klaypm_4.png" style="width: 600px;"/>
 
-# The way forward
-
-Klay should be out soon, and hopefully it will sell well! No matter how it does, I will keep on the path I set on to two months ago.
-
-It's back to creative time. It is not clear what I am going to do, but some things are certain: It is going to be a game, it is going to be exclusively for VR, and it will revolve around the manipulation of gravity, space and light.

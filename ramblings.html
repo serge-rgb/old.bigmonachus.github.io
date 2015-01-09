@@ -1,12 +1,12 @@
 ---
 layout: page
-title: Going Indie
+title: Ramblings
 ---
 
 <div id="home">
     <ul>
         {% for post in {site.posts | size} %}
-        {% if post.categories contains "going-indie" %}
+        {% if post.categories contains "ramblings" %}
         <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
         {% endif %}
         {% endfor %}
